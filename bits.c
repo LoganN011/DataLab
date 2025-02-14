@@ -1,7 +1,7 @@
 /* 
  * CS:APP Data Lab 
  * 
- * <Please put your name and userid here>
+ * < Logan Nunno / lnunno1 >
  * 
  * bits.c - Source file with your solutions to the Lab.
  *          This is the file you will hand in to your instructor.
@@ -184,7 +184,10 @@ int bitCount(int x) {
  *   Rating: 1
  */
 int bitNor(int x, int y) {
-  return 2;
+  // nor == ~(x|y)
+  // using demorgans (~x&~y)
+  // passes all of the test 
+  return ~x&~y;
 }
 /* 
  * byteSwap - swaps the nth byte and the mth byte
