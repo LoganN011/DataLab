@@ -199,6 +199,8 @@ int bitNor(int x, int y) {
  *  Rating: 2
  */
 int byteSwap(int x, int n, int m) {
+  //Idea: use bit shifting to save the two bytes we want then replace the
+  //orginal with the new bytes
     return 2;
 }
 /*
