@@ -173,8 +173,23 @@ NOTES:
  *   Max ops: 40
  *   Rating: 4
  */
-int bitCount(int x) {
-  return 2;
+int bitCount(int x)
+{
+  //count every two bit and that value to some counter
+  //ie
+  int count=0;
+  count+=x&0x1;
+  count+=x&0x2;
+  count+=x&0x4;
+  count+=x&0x8;
+  count+=x&0x10;
+  count+=x&0x20;
+  count+=x&0x40;
+  count+=x&0x80;
+  //find some way to reduce the number of operiation
+  //should figure out how to count more than 1 at a time
+  
+  return count;
 }
 /* 
  * bitNor - ~(x|y) using only ~ and & 
