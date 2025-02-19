@@ -186,10 +186,36 @@ int bitCount(int x)
   count+=x&0x20;
   count+=x&0x40;
   count+=x&0x80;
+  count+=x&0x100;
+  count+=x&0x200;
+  count+=x&0x400;
+  count+=x&0x800;
+  count+=x&0x1000;
+  count+=x&0x2000;
+  count+=x&0x4000;
+  count+=x&0x8000;
+  count+=x&0x10000;
+  count+=x&0x20000;
+  count+=x&0x40000;
+  count+=x&0x80000;
+  count+=x&0x100000;
+  count+=x&0x200000;
+  count+=x&0x400000;
+  count+=x&0x800000;
+  count+=x&0x1000000;
+  count+=x&0x2000000;
+  count+=x&0x4000000;
+  count+=x&0x8000000;
+  /*
+  count+=x&0x10000000;
+  count+=x&0x20000000;
+  count+=x&0x40000000;
+  count+=x&0x80000000;*/
   //find some way to reduce the number of operiation
   //should figure out how to count more than 1 at a time
-  
+  printf("%d\n",count);
   return count;
+  //Also I do not think I can do casting but if it works it works
 }
 /* 
  * bitNor - ~(x|y) using only ~ and & 
