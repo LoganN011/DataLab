@@ -206,16 +206,16 @@ int bitCount(int x)
   count+=x&0x2000000;
   count+=x&0x4000000;
   count+=x&0x8000000;
-  /*
+  
   count+=x&0x10000000;
   count+=x&0x20000000;
   count+=x&0x40000000;
-  count+=x&0x80000000;*/
+  count+=x&0x80000000;
   //find some way to reduce the number of operiation
   //should figure out how to count more than 1 at a time
-  printf("%d\n",count);
   return count;
-  //Also I do not think I can do casting but if it works it works
+  //This just does not work for some reason even tho I think it should
+  
 }
 /* 
  * bitNor - ~(x|y) using only ~ and & 
@@ -242,7 +242,12 @@ int bitNor(int x, int y) {
 int byteSwap(int x, int n, int m) {
   //Idea: use bit shifting to save the two bytes we want then replace the
   //orginal with the new bytes
-    return 2;
+  int nB = (x >> (8*n))& 0xFF; // change the multiplcation to use bit shifting
+  int mB = (x >> (8*m))& 0xFF;
+  x = (x & ~(0xFF<<(8*n)))& (x & ~(0xFF<<(8*m)));
+  x |= nB;
+  x |= mB;
+    return x ;
 }
 /*
  * ezThreeFourths - multiplies by 3/4 rounding toward 0,
