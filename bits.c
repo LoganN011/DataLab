@@ -306,7 +306,9 @@ unsigned float_neg(unsigned uf) {
  *   Rating: 3
  */
 int isAsciiDigit(int x) {
-  return 2;
+  // - :: ~(~x+y)
+  //Working but might have to swap to use bit wise subtraction
+  return !((x-0x30) >>31) && !((0x39-x)>>31);
 }
 /* 
  * isPositive - return 1 if x > 0, return 0 otherwise 
