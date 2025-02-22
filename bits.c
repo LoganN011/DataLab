@@ -239,15 +239,12 @@ int bitNor(int x, int y) {
  *  Rating: 2
  */
 int byteSwap(int x, int n, int m) {
-  //Idea: use bit shifting to save the two bytes we want then replace the
-  //orginal with the new bytes
-  printf("Starting x:%x\nN:%d\nM:%d\n",x,n,m);
-  int nB = (x >> (8*n))& 0xFF; // change the multiplcation to use bit shifting
-  int mB = (x >> (8*m))& 0xFF;
-  x = (x & ~(0xFF<<(8*n))) & (x & ~(0xFF<<(8*m)));
-  x = x | (mB<<(n*8));
-  x = x | (nB<<(m*8));
-    return x ;
+  int nB = (x >> (n<<3))& 0xFF; // change the multiplcation to use bit shifting
+  int mB = (x >> (m<<3))& 0xFF;
+  x = (x & ~(0xFF<<(n<<3))) & (x & ~(0xFF<<(m<<3)));
+  x = x | (mB<<(n<<3));
+  x = x | (nB<<(m<<3));
+  return x ;
 }
 /*
  * ezThreeFourths - multiplies by 3/4 rounding toward 0,
