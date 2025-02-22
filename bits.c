@@ -318,5 +318,6 @@ int isAsciiDigit(int x) {
  *   Rating: 3
  */
 int isPositive(int x) {
-  return 2;
+  //Breaks becuase of the zero case i think  
+  return !(x>>31);
 }
