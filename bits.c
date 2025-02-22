@@ -178,6 +178,7 @@ int bitCount(int x)
   //count every two bit and that value to some counter
   //ie
   int count=0;
+  //This was never going to work so IDK what I am doing
   count+=x&0x1;
   count+=x&0x2;
   count+=x&0x4;
@@ -210,10 +211,10 @@ int bitCount(int x)
   count+=x&0x20000000;
   count+=x&0x40000000;
   count+=x&0x80000000;
+  printf("X:%d\n",count);
   //find some way to reduce the number of operiation
   //should figure out how to count more than 1 at a time
   return count;
-  //This just does not work for some reason even tho I think it should
   
 }
 /* 
@@ -258,7 +259,14 @@ int byteSwap(int x, int n, int m) {
  *   Rating: 3
  */
 int ezThreeFourths(int x) {
-  return 2;
+  //Idea multiple by 3 then divide that number by 4
+  int mult3= x+( x<<1);
+  // printf("MULT3:%d\n",mult3);
+  //printf("Full:%d\n",mult3>>2);
+
+  //Mostly works but breaks when doing over flow and/or rounding so
+  //find out how to round down to zero
+  return mult3>>2;
 }
 /* 
  * float_abs - Return bit-level equivalent of absolute value of f for
