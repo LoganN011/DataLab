@@ -206,7 +206,6 @@ int bitCount(int x)
   count+=x&0x2000000;
   count+=x&0x4000000;
   count+=x&0x8000000;
-  
   count+=x&0x10000000;
   count+=x&0x20000000;
   count+=x&0x40000000;
@@ -242,11 +241,12 @@ int bitNor(int x, int y) {
 int byteSwap(int x, int n, int m) {
   //Idea: use bit shifting to save the two bytes we want then replace the
   //orginal with the new bytes
+  printf("Starting x:%x\nN:%d\nM:%d\n",x,n,m);
   int nB = (x >> (8*n))& 0xFF; // change the multiplcation to use bit shifting
   int mB = (x >> (8*m))& 0xFF;
-  x = (x & ~(0xFF<<(8*n)))& (x & ~(0xFF<<(8*m)));
-  x |= nB;
-  x |= mB;
+  x = (x & ~(0xFF<<(8*n))) & (x & ~(0xFF<<(8*m)));
+  x = x | (mB<<(n*8));
+  x = x | (nB<<(m*8));
     return x ;
 }
 /*
