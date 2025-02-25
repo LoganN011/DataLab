@@ -175,44 +175,9 @@ NOTES:
  */
 int bitCount(int x)
 {
-  //count every two bit and that value to some counter
-  //ie
+  //Look at the hamming weight link in the credits and follow the process of
+  //how to count the number of 1's
   int count=0;
-  //This was never going to work so IDK what I am doing
-  count+=x&0x1;
-  count+=x&0x2;
-  count+=x&0x4;
-  count+=x&0x8;
-  count+=x&0x10;
-  count+=x&0x20;
-  count+=x&0x40;
-  count+=x&0x80;
-  count+=x&0x100;
-  count+=x&0x200;
-  count+=x&0x400;
-  count+=x&0x800;
-  count+=x&0x1000;
-  count+=x&0x2000;
-  count+=x&0x4000;
-  count+=x&0x8000;
-  count+=x&0x10000;
-  count+=x&0x20000;
-  count+=x&0x40000;
-  count+=x&0x80000;
-  count+=x&0x100000;
-  count+=x&0x200000;
-  count+=x&0x400000;
-  count+=x&0x800000;
-  count+=x&0x1000000;
-  count+=x&0x2000000;
-  count+=x&0x4000000;
-  count+=x&0x8000000;
-  count+=x&0x10000000;
-  count+=x&0x20000000;
-  count+=x&0x40000000;
-  count+=x&0x80000000;
-  printf("X:%d\n",count);
-  //find some way to reduce the number of operiation
   //should figure out how to count more than 1 at a time
   return count;
   
@@ -266,7 +231,12 @@ int ezThreeFourths(int x) {
 
   //Mostly works but breaks when doing over flow and/or rounding so
   //find out how to round down to zero
-  return mult3>>2;
+
+  //Tested and failed roudning things:
+  //Double not
+  //Or with 0
+  //right shift by 1 the left shift
+  return (mult3>>2);
 }
 /* 
  * float_abs - Return bit-level equivalent of absolute value of f for
