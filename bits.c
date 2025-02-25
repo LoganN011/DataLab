@@ -178,7 +178,13 @@ int bitCount(int x)
   //Look at the hamming weight link in the credits and follow the process of
   //how to count the number of 1's
   int count=0;
+  int i = 0;
   //should figure out how to count more than 1 at a time
+
+  for(i=0;i<32;i++)
+  {
+    count+=(x>>i)&1;
+  }
   return count;
   
 }
