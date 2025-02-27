@@ -172,20 +172,32 @@ NOTES:
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 40
  *   Rating: 4
+ *   Explanation: By using the Hamming weight method we are able to count 
+ * the number of bits in pairs and commapact the oginal number down to 
+ * get the solution. First we mask the value with 5 so every other bit is 
+ * saved. We then do the same the with the remaining bits and add them to
+ * together. We then do the same process over again just with the new value 
+ * and using 3 so the bits are counted in pairs. We then sum the pairs. We keep
+ * doing this for 5 total times until we get the final number and that is 
+ * number of 1's in the. 
  */
 int bitCount(int x)
 {
   //Look at the hamming weight link in the credits and follow the process of
   //how to count the number of 1's
-  int count=0;
-  int i = 0;
-  //should figure out how to count more than 1 at a time
+  int mask1 = 0x55555555; 
+  int mask2 = 0x33333333; 
+  int mask3 = 0x0F0F0F0F; 
+  int mask4 = 0x00FF00FF; 
+  int mask5 = 0x0000FFFF; 
+    
+  x = (x & mask1) + ((x >> 1) & mask1); 
+  x = (x & mask2) + ((x >> 2) & mask2); 
+  x = (x & mask3) + ((x >> 4) & mask3); 
+  x = (x & mask4) + ((x >> 8) & mask4); 
+  x = (x & mask5) + ((x >> 16) & mask5);
 
-  for(i=0;i<32;i++)
-  {
-    count+=(x>>i)&1;
-  }
-  return count;
+  return x;  
   
 }
 /* 
@@ -242,7 +254,7 @@ int ezThreeFourths(int x) {
   //Double not
   //Or with 0
   //right shift by 1 the left shift
-  return (mult3>>2);
+  return mult3>>2;
 }
 /* 
  * float_abs - Return bit-level equivalent of absolute value of f for
