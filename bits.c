@@ -183,8 +183,6 @@ NOTES:
  */
 int bitCount(int x)
 {
-  //Look at the hamming weight link in the credits and follow the process of
-  //how to count the number of 1's
   int mask1 = 0x55555555; 
   int mask2 = 0x33333333; 
   int mask3 = 0x0F0F0F0F; 
@@ -198,7 +196,6 @@ int bitCount(int x)
   x = (x & mask5) + ((x >> 16) & mask5);
 
   return x;  
-  
 }
 /* 
  * bitNor - ~(x|y) using only ~ and & 
@@ -246,7 +243,10 @@ int byteSwap(int x, int n, int m) {
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 12
  *   Rating: 3
- *   Explanation:  
+ *   Explanation: To multiply by 3/4 we first multiply by 3 by adding x + 2x 
+ * to get a number that is 3x as big. Then we calculate a bias of that number
+ * to know if the number will need to be rounded. We added the bias to the 
+ * number and then divided by 4 so that number produces the correct output.   
  */
 int ezThreeFourths(int x) {
   
@@ -265,6 +265,12 @@ int ezThreeFourths(int x) {
  *   Legal ops: Any integer/unsigned operations incl. ||, &&. also if, while
  *   Max ops: 10
  *   Rating: 2
+ *   Explanation: First we find the both the exp and the mantissa of the value 
+ * we then use them to see if the number is NaN. To be not a number the exp is 
+ * all 1's and the mantissa is non zero. If the number passed in is anthing 
+ * but not a number we compute the abs of the number by masking the number with
+ * all 1's but the sing bit a 0 so it will be removed and the number will
+ * always be positive.
 */
 unsigned float_abs(unsigned uf) {
   unsigned exp =0;
@@ -278,6 +284,7 @@ unsigned float_abs(unsigned uf) {
 
   return uf&0x7FFFFFFF;
 }
+
 /* 
  * float_neg - Return bit-level equivalent of expression -f for
  *   floating point argument f.
@@ -288,6 +295,11 @@ unsigned float_abs(unsigned uf) {
  *   Legal ops: Any integer/unsigned operations incl. ||, &&. also if, while
  *   Max ops: 10
  *   Rating: 2
+ *   Explanation: First we find the both the exp and the mantissa of the value 
+ * we then use them to see if the number is NaN. To be not a number the exp is 
+ * all 1's and the mantissa is non zero. If the number passed in is anthing 
+ * but not a number we compute the negative value of f by xor the sign bit so
+ * if it is on it will not be off and if it is off it will now be on. 
  */
 unsigned float_neg(unsigned uf) {
   unsigned exp =0;
@@ -310,11 +322,16 @@ unsigned float_neg(unsigned uf) {
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 15
  *   Rating: 3
+ *   Explanation: To check to see if the provided number is a Ascii Digit
+ * we have to check if the provided number is with 0x30 to 0x39. we do this by
+ * check to see if the number is greater than or equal to 0x30 by subtracting
+ * 0x30 from x and checking if it is postitive. We then check if x is less 
+ * than or equal to 0x39 by subtracting it x from that number and seeing if 
+ * it is positive. To subtract we convert the number into twos compliment that 
+ * is be sutracted and add it to the other number.
  */
 int isAsciiDigit(int x) {
-  // - :: ~(~x+y)
-  //Working but might have to swap to use bit wise subtraction
-  return !((x-0x30) >>31) && !((0x39-x)>>31);
+  return !((x+(~0x30+1)) >>31) && !((0x39+(~x+1))>>31);
 }
 /* 
  * isPositive - return 1 if x > 0, return 0 otherwise 
@@ -322,8 +339,10 @@ int isAsciiDigit(int x) {
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 8
  *   Rating: 3
+ *   Explanation: To check if a number is positive when check the sign bit and 
+ * if that number is not 1 when then it is postive. We also check to see if x
+ * is zero becuase if x is 0 then it should return 0
  */
 int isPositive(int x) {
-  //Breaks becuase of the zero case i think  
   return !(x>>31) & !!x;
 }
