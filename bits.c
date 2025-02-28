@@ -265,9 +265,23 @@ int ezThreeFourths(int x) {
  *   Legal ops: Any integer/unsigned operations incl. ||, &&. also if, while
  *   Max ops: 10
  *   Rating: 2
- */
+*/
 unsigned float_abs(unsigned uf) {
-  return 2;
+  unsigned exp =0;
+  unsigned m=0;
+  exp = uf & 0x7F800000;
+  m = uf & 0x007FFFFF;
+  printf("exp:%x\n",exp);
+  printf("m:%x\n",m);
+  printf("SIZE OF %d\n",sizeof(unsigned));
+  if(exp == 0x7F800000 && m !=0)
+  {
+    printf("In IF:%d\n",exp & 0x7F800000 && m !=0);
+    return uf;
+
+  }
+
+  return uf&0x7FFFFFFF;
 }
 /* 
  * float_neg - Return bit-level equivalent of expression -f for
@@ -281,7 +295,7 @@ unsigned float_abs(unsigned uf) {
  *   Rating: 2
  */
 unsigned float_neg(unsigned uf) {
- return 2;
+  return 2;
 }
 /* 
  * isAsciiDigit - return 1 if 0x30 <= x <= 0x39 (ASCII codes for characters '0' to '9')
