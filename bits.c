@@ -206,11 +206,11 @@ int bitCount(int x)
  *   Legal ops: ~ &
  *   Max ops: 8
  *   Rating: 1
+ *   Explanation: Using demorgans law we know we can rewrite nor using & and ~
+ * This is done by distributing the not into the equation so it can be 
+ * rewritten as (~x&~y) and that is logically the same as nor   
  */
 int bitNor(int x, int y) {
-  // nor == ~(x|y)
-  // using demorgans (~x&~y)
-  // passes all of the test 
   return ~x&~y;
 }
 /* 
@@ -221,9 +221,15 @@ int bitNor(int x, int y) {
  *  Legal ops: ! ~ & ^ | + << >>
  *  Max ops: 25
  *  Rating: 2
+ *  Explanation: Saved both the nth and mth byte by removing all other bytes 
+ * with a mask of FF. Shifting the x over by n*8(or <<3) we can save both 
+ * m and n. Then we remove the m and nth byte from the x so it has a hole of 
+ * 0x00 at those spots so both can be placed in there. we the finally place 
+ * m in the nth byte and n in the mth byte by shifting them over to be in 
+ * line with where they should be in x.
  */
 int byteSwap(int x, int n, int m) {
-  int nB = (x >> (n<<3))& 0xFF; // change the multiplcation to use bit shifting
+  int nB = (x >> (n<<3))& 0xFF; 
   int mB = (x >> (m<<3))& 0xFF;
   x = (x & ~(0xFF<<(n<<3))) & (x & ~(0xFF<<(m<<3)));
   x = x | (mB<<(n<<3));
@@ -240,6 +246,7 @@ int byteSwap(int x, int n, int m) {
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 12
  *   Rating: 3
+ *   Explanation:  
  */
 int ezThreeFourths(int x) {
   //Idea multiple by 3 then divide that number by 4
