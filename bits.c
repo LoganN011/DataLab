@@ -271,14 +271,9 @@ unsigned float_abs(unsigned uf) {
   unsigned m=0;
   exp = uf & 0x7F800000;
   m = uf & 0x007FFFFF;
-  printf("exp:%x\n",exp);
-  printf("m:%x\n",m);
-  printf("SIZE OF %d\n",sizeof(unsigned));
   if(exp == 0x7F800000 && m !=0)
   {
-    printf("In IF:%d\n",exp & 0x7F800000 && m !=0);
     return uf;
-
   }
 
   return uf&0x7FFFFFFF;
@@ -295,7 +290,17 @@ unsigned float_abs(unsigned uf) {
  *   Rating: 2
  */
 unsigned float_neg(unsigned uf) {
-  return 2;
+  unsigned exp =0;
+  unsigned m=0;
+  exp = uf & 0x7F800000;
+  m = uf & 0x007FFFFF;
+    
+  if(exp == 0x7F800000 && m !=0)
+  {
+    return uf;
+  }
+
+  return uf^0x80000000;
 }
 /* 
  * isAsciiDigit - return 1 if 0x30 <= x <= 0x39 (ASCII codes for characters '0' to '9')
@@ -320,5 +325,5 @@ int isAsciiDigit(int x) {
  */
 int isPositive(int x) {
   //Breaks becuase of the zero case i think  
-  return !(x>>31);
+  return !(x>>31) & !!x;
 }
