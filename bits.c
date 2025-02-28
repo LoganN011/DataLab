@@ -249,19 +249,11 @@ int byteSwap(int x, int n, int m) {
  *   Explanation:  
  */
 int ezThreeFourths(int x) {
-  //Idea multiple by 3 then divide that number by 4
+  
+  int bias=0;
   int mult3= x+( x<<1);
-  // printf("MULT3:%d\n",mult3);
-  //printf("Full:%d\n",mult3>>2);
-
-  //Mostly works but breaks when doing over flow and/or rounding so
-  //find out how to round down to zero
-
-  //Tested and failed roudning things:
-  //Double not
-  //Or with 0
-  //right shift by 1 the left shift
-  return mult3>>2;
+  bias = (mult3>>31) & 3;
+  return (mult3+bias)>>2;
 }
 /* 
  * float_abs - Return bit-level equivalent of absolute value of f for
