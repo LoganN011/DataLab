@@ -179,23 +179,23 @@ NOTES:
  * together. We then do the same process over again just with the new value 
  * and using 3 so the bits are counted in pairs. We then sum the pairs. We keep
  * doing this for 5 total times until we get the final number and that is 
- * number of 1's in the. 
+ * number of 1's in the. Had to update the code to not use constants higher 
+ * than 0xFF so now there are only 3 masks and we just the last two totals 
+ * to get the total number of bits. 
  */
 int bitCount(int x)
 {
-  int mask1 = 0x55555555; 
-  int mask2 = 0x33333333; 
-  int mask3 = 0x0F0F0F0F; 
-  int mask4 = 0x00FF00FF; 
-  int mask5 = 0x0000FFFF; 
+  int mask1 = 0x55+(0x55<<8)+(0x55<<16)+(0x55<<24);
+  int mask2 = 0x33+(0x33<<8)+(0x33<<16)+(0x33<<24); 
+  int mask3 = 0x0F+(0x0F<<8)+(0x0F<<16)+(0x0F<<24);
     
   x = (x & mask1) + ((x >> 1) & mask1); 
   x = (x & mask2) + ((x >> 2) & mask2); 
   x = (x & mask3) + ((x >> 4) & mask3); 
-  x = (x & mask4) + ((x >> 8) & mask4); 
-  x = (x & mask5) + ((x >> 16) & mask5);
+  x +=x >> 8;
+  x +=x >> 16;
 
-  return x;  
+  return x&0x3f;
 }
 /* 
  * bitNor - ~(x|y) using only ~ and & 
@@ -331,7 +331,7 @@ unsigned float_neg(unsigned uf) {
  * is be sutracted and add it to the other number.
  */
 int isAsciiDigit(int x) {
-  return !((x+(~0x30+1)) >>31) && !((0x39+(~x+1))>>31);
+  return !((x+(~0x30+1)) >>31) & !((0x39+(~x+1))>>31);
 }
 /* 
  * isPositive - return 1 if x > 0, return 0 otherwise 
